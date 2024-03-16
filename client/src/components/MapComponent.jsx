@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXRoYXJ2am9zaGkiLCJhIjoiY2x0dHQ3M2lxMTBobjJqcDd5cHRkNjZsZyJ9.o3cmAVRVx5VRlkFbmWb3zQ';
 
-function MapComponent() {
+function MapComponent({startLongitude, startLatitude, endLongitude, endLatitude}) {
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
@@ -12,7 +12,8 @@ function MapComponent() {
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [75.876359,22.68], // Set initial center to (0, 0)
       zoom: 16,
-    });
+    },
+    console.log(startLongitude));
 
     // Add navigation control
     map.addControl(new mapboxgl.NavigationControl());
@@ -26,7 +27,7 @@ function MapComponent() {
 
   // Function to fetch and display route
   const fetchRoute = async (map) => {
-    const response = await fetch(`https://api.mapbox.com/directions/v5/mapbox/driving/75.833616,22.739099;75.876359,22.684189?geometries=geojson&access_token=${mapboxgl.accessToken}`);
+    const response = await fetch(`https://api.mapbox.com/directions/v5/mapbox/driving/${startLongitude},${startLatitude};${endLongitude},${endLatitude}?geometries=geojson&access_token=${mapboxgl.accessToken}`);
     const data = await response.json();
     const route = data.routes[0].geometry;
 

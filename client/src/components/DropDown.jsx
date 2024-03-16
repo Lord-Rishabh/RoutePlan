@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 
-function CoordinateForm({setStartLatitude, setStartLongitude, setEndLatitude, setEndLongitude}) {
-  var startLatitude, startLongitude, endLatitude, endLongitude;
+function CoordinateForm({ setStartLatitude, setStartLongitude, setEndLatitude, setEndLongitude }) {
+  const [startLatitude, setStartLatitudeLocal] = useState(null);
+  const [startLongitude, setStartLongitudeLocal] = useState(null);
+  const [endLatitude, setEndLatitudeLocal] = useState(null);
+  const [endLongitude, setEndLongitudeLocal] = useState(null);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission here, such as updating state or making an API call
     setStartLatitude(startLatitude);
-    setEndLatitude(endLatitude);
     setStartLongitude(startLongitude);
+    setEndLatitude(endLatitude);
     setEndLongitude(endLongitude);
   };
 
@@ -18,44 +22,40 @@ function CoordinateForm({setStartLatitude, setStartLongitude, setEndLatitude, se
         <div className="mb-4">
           <label htmlFor="startLatitude" className="block text-sm font-medium text-gray-700">Start Latitude</label>
           <input
-
             id="startLatitude"
             className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             value={startLatitude}
-            onChange={(e) => setStartLatitude(e.target.value)}
+            onChange={(e) => setStartLatitudeLocal(e.target.value)}
             required
           />
         </div>
         <div className="mb-4">
           <label htmlFor="startLongitude" className="block text-sm font-medium text-gray-700">Start Longitude</label>
           <input
-
             id="startLongitude"
             className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             value={startLongitude}
-            onChange={(e) => setStartLongitude(e.target.value)}
+            onChange={(e) => setStartLongitudeLocal(e.target.value)}
             required
           />
         </div>
         <div className="mb-4">
           <label htmlFor="endLatitude" className="block text-sm font-medium text-gray-700">End Latitude</label>
           <input
-
             id="endLatitude"
             className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             value={endLatitude}
-            onChange={(e) => setEndLatitude(e.target.value)}
+            onChange={(e) => setEndLatitudeLocal(e.target.value)}
             required
           />
         </div>
         <div className="mb-4">
           <label htmlFor="endLongitude" className="block text-sm font-medium text-gray-700">End Longitude</label>
           <input
-
             id="endLongitude"
             className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             value={endLongitude}
-            onChange={(e) => setEndLongitude(e.target.value)}
+            onChange={(e) => setEndLongitudeLocal(e.target.value)}
             required
           />
         </div>

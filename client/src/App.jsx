@@ -7,11 +7,10 @@ function App() {
   const [startLongitude, setStartLongitude] = useState(22.68);
   const [endLatitude, setEndLatitude] = useState(75.876359);
   const [endLongitude, setEndLongitude] = useState(22.684189);
-
-  useEffect(() => {
   
+  useEffect(() => {
     return () => {
-      console.log(process.env.INITIAL_LATITUDE);
+      
     }
   }, [])
   

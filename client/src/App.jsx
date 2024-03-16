@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import DropdownMenu from "./components/DropDown";
 import MapComponent from "./components/MapComponent";
+
+
 function App() {
   const [startLatitude, setStartLatitude] = useState(75.876359);
   const [startLongitude, setStartLongitude] = useState(22.68);
@@ -11,7 +13,7 @@ function App() {
   useEffect(() => {
   
     return () => {
-      console.log(process.env.INITIAL_LATITUDE);
+      console.log(startLatitude);
     }
   }, [])
   

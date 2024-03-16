@@ -1,77 +1,68 @@
-import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
+import React, { useEffect, useRef } from "react";
+import mapboxgl from "mapbox-gl";
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYXRoYXJ2am9zaGkiLCJhIjoiY2x0dHQ3M2lxMTBobjJqcDd5cHRkNjZsZyJ9.o3cmAVRVx5VRlkFbmWb3zQ';
+mapboxgl.accessToken =
+  "pk.eyJ1IjoiYXRoYXJ2am9zaGkiLCJhIjoiY2x0dHQ3M2lxMTBobjJqcDd5cHRkNjZsZyJ9.o3cmAVRVx5VRlkFbmWb3zQ";
 
-function MapComponent() {
+function MapComponent({ startLatitude, endLatitude, startLongitude, endLongitude }) {
   const mapContainerRef = useRef(null);
-  
-  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const map = new mapboxgl.Map({
+    let map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [75.876359,22.68], // Set initial center to (0, 0)
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [startLatitude, startLongitude], // Set initial center to the provided coordinates
       zoom: 16,
     });
+
+    console.log({ startLatitude, endLatitude, startLongitude, endLongitude })
 
     // Add navigation control
     map.addControl(new mapboxgl.NavigationControl());
 
-    // Fetch route data from Mapbox Directions API
+    // Fetch route data from Mapbox Directions API whenever coordinates change
     fetchRoute(map);
 
-      // Clean up on unmount
-      return () => map.remove();
-    }
-
-    function successLocation(position) {
-      console.log(position);
-      setCount(count+1);
-      console.log(count);
-      setupMap([position.coords.longitude, position.coords.latitude]);
-    }
-
-    function errorLocation(error) {
-      console.error("ERROR_LOCATION_CALLED");
-      setupMap([75.876359, 22.684189]);
-    }
-
-  }, []);
+    // Clean up on unmount
+    return () => map.remove();
+  }, [startLatitude, startLongitude, endLatitude, endLongitude]);
 
   // Function to fetch and display route
   const fetchRoute = async (map) => {
-    const response = await fetch(`https://api.mapbox.com/directions/v5/mapbox/driving/75.833616,22.739099;75.876359,22.684189?geometries=geojson&access_token=${mapboxgl.accessToken}`);
+    const response = await fetch(
+      `https://api.mapbox.com/directions/v5/mapbox/driving/${startLatitude},${startLongitude};${endLatitude},${endLongitude}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+    );
     const data = await response.json();
     const route = data.routes[0].geometry;
 
+    // Remove previous route layer if exists
+    // map.getSource("route") && map.removeLayer("route");
+    // console.log(map.getSource("route"))
+
     // Add route layer to map
     map.addLayer({
-      id: 'route',
-      type: 'line',
+      id: "route",
+      type: "line",
       source: {
-        type: 'geojson',
+        type: "geojson",
         data: {
-          type: 'Feature',
-          geometry: route
-        }
+          type: "Feature",
+          geometry: route,
+        },
       },
       layout: {
-        'line-join': 'round',
-        'line-cap': 'round'
+        "line-join": "round",
+        "line-cap": "round",
       },
       paint: {
-        'line-color': '#3887be',
-        'line-width': 5,
-        'line-opacity': 0.75
-      }
+        "line-color": "#3887be",
+        "line-width": 5,
+        "line-opacity": 0.75,
+      },
     });
   };
 
-  return (
-    <div ref={mapContainerRef} style={{ width: '100%', height: '100vh' }} />
-  );
+  return <div ref={mapContainerRef} style={{ width: "100%", height: "100vh" }} />;
 }
 
 export default MapComponent;

@@ -1,13 +1,26 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
 import DropdownMenu from "./components/DropDown";
 import MapComponent from "./components/MapComponent";
 function App() {
+  const [startLatitude, setStartLatitude] = useState(75.876359);
+  const [startLongitude, setStartLongitude] = useState(22.68);
+  const [endLatitude, setEndLatitude] = useState(75.876359);
+  const [endLongitude, setEndLongitude] = useState(22.684189);
+
+  useEffect(() => {
+  
+    return () => {
+      console.log(process.env.INITIAL_LATITUDE);
+    }
+  }, [])
+  
   return (
     <>
-      <MapComponent />
+      <DropdownMenu setStartLatitude={setStartLatitude} setStartLongitude={setStartLongitude} setEndLatitude={setEndLatitude} setEndLongitude={setEndLongitude} />
+
+
+      <MapComponent startLatitude={startLatitude} endLatitude={endLatitude} startLongitude={startLongitude} endLongitude={endLongitude}/>
     </>
   );
 }

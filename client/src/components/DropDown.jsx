@@ -69,7 +69,7 @@ function StopForm({ setStartLatitude, setStartLongitude, setEndLatitude, setEndL
           <div className='pl-12 '>
             <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto 	bg-opacity-30 bg-white p-4 rounded-lg">
               <div className="mb-4 ">
-                <label className="block  text-sm font-bold mb-2">Start Latitude:</label>
+                <label className="block  text-sm font-bold mb-2">Start Longitude:</label>
                 <input
                   type="number"
                   value={formData.startLatitude}
@@ -80,7 +80,7 @@ function StopForm({ setStartLatitude, setStartLongitude, setEndLatitude, setEndL
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-bold mb-2">Start Longitude:</label>
+                <label className="block text-sm font-bold mb-2">Start Latitude:</label>
                 <input
                   type="text"
                   value={formData.startLongitude}
@@ -91,7 +91,7 @@ function StopForm({ setStartLatitude, setStartLongitude, setEndLatitude, setEndL
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-bold mb-2">End Latitude:</label>
+                <label className="block text-sm font-bold mb-2">End Longitude:</label>
                 <input
                   type="text"
                   value={formData.endLatitude}
@@ -102,7 +102,7 @@ function StopForm({ setStartLatitude, setStartLongitude, setEndLatitude, setEndL
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-bold mb-2">End Longitude:</label>
+                <label className="block text-sm font-bold mb-2">End Latitude:</label>
                 <input
                   type="text"
                   value={formData.endLongitude}

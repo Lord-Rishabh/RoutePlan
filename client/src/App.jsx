@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DropdownMenu from "./components/DropDown";
 import MapComponent from "./components/MapComponent";
 import Navbar from "./pages/Navbar";
-
 function App() {
   const [startLatitude, setStartLatitude] = useState(22.684189);
   const [startLongitude, setStartLongitude] = useState(75.876359);
@@ -49,6 +48,8 @@ function App() {
               />
             }
           />
+
+          
 
           {/* Assuming you want this route to match any unmatched paths */}
           <Route

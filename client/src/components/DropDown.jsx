@@ -112,30 +112,12 @@ function StopForm({ setStartLatitude, setStartLongitude, setEndLatitude, setEndL
                   className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
-              <button type="button" onClick={handleAddStop} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Add Stop
+              <div className="flex justify-center items-center">
+
+              <button type="submit" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">
+                Submit
               </button>
-              {stops.map((stop, index) => (
-                <div key={index} className="mb-4">
-                  <label className="block text-sm font-bold mb-2">{`Stop ${index + 1} Latitude:`}</label>
-                  <input
-                    type="text"
-                    value={stop[0]}
-                    onChange={(e) => handleStopLatitudeChange(index, e.target.value)}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                  <label className="block text-sm font-bold mb-2">{`Stop ${index + 1} Longitude:`}</label>
-                  <input
-                    type="text"
-                    value={stop[1]}
-                    onChange={(e) => handleStopLongitudeChange(index, e.target.value)}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-              ))}
-                <button type="submit" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-6">
-                  Submit
-                </button>
+              </div>
             </form>
 
           </div>

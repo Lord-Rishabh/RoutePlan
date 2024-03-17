@@ -73,11 +73,11 @@ function MapComponent({
 
     console.log("#$ " + coordinatesString);
 
-    console.log("&*" + `
-    https://api.mapbox.com/directions/v5/mapbox/driving/${coordinatesString}?geometries=geojson&access_token=${mapboxgl.accessToken}`);
     const response = await fetch(`
-      https://api.mapbox.com/directions/v5/mapbox/driving/${coordinatesString}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+      https://api.mapbox.com/directions/v5/mapbox/driving/${startLatitude},${startLongitude};${endLatitude},${endLongitude}?geometries=geojson&access_token=${mapboxgl.accessToken}`
     );
+    console.log(`
+    https://api.mapbox.com/directions/v5/mapbox/driving/${startLatitude},${startLongitude};${endLatitude},${endLongitude}?geometries=geojson&access_token=${mapboxgl.accessToken}`);
 
     const data = await response.json();
     const route = data.routes[0].geometry;
@@ -119,13 +119,13 @@ function MapComponent({
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [startLongitude, startLatitude],
+            coordinates: [ startLatitude, startLongitude],
           },
         },
       },
       paint: {
         "circle-radius": 8,
-        "circle-color": "#3887be",
+        "circle-color": "#98c36a",
       },
     });
 
@@ -139,13 +139,13 @@ function MapComponent({
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [endLongitude, endLatitude],
+            coordinates: [ endLatitude, endLongitude],
           },
         },
       },
       paint: {
         "circle-radius": 8,
-        "circle-color": "#00FF00",
+        "circle-color": "#e05340",
       },
     });
   };

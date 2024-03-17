@@ -83,6 +83,7 @@ function CoordinateForm({setStartLatitude, setStartLongitude, setEndLatitude, se
     endLatitude: '',
     endLongitude: ''
   });
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -106,7 +107,7 @@ function CoordinateForm({setStartLatitude, setStartLongitude, setEndLatitude, se
       <h1 className="text-xl font-semibold mb-4">Coordinate Form</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="startLatitude" className="block text-sm font-medium text-gray-700">Start Longitude</label>
+          <label htmlFor="startLatitude" className="block text-sm font-medium text-gray-700">Start Latitude</label>
           <input
             id="startLatitude"
             type="number"
@@ -117,7 +118,7 @@ function CoordinateForm({setStartLatitude, setStartLongitude, setEndLatitude, se
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="startLongitude" className="block text-sm font-medium text-gray-700">Start Latitude</label>
+          <label htmlFor="startLongitude" className="block text-sm font-medium text-gray-700">Start Longitude</label>
           <input
             id="startLongitude"
             type="number"
@@ -128,7 +129,7 @@ function CoordinateForm({setStartLatitude, setStartLongitude, setEndLatitude, se
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="endLatitude" className="block text-sm font-medium text-gray-700">End Longitude</label>
+          <label htmlFor="endLatitude" className="block text-sm font-medium text-gray-700">End Latitude</label>
           <input
             id="endLatitude"
             type="number"
@@ -139,7 +140,7 @@ function CoordinateForm({setStartLatitude, setStartLongitude, setEndLatitude, se
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="endLongitude" className="block text-sm font-medium text-gray-700">End Latitude</label>
+          <label htmlFor="endLongitude" className="block text-sm font-medium text-gray-700">End Longitude</label>
           <input
             id="endLongitude"
             type="number"

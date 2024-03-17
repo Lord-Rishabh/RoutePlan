@@ -5,8 +5,8 @@ import MapComponent from "./components/MapComponent";
 
 
 function App() {
-  const [startLatitude, setStartLatitude] = useState(75.876359);
-  const [startLongitude, setStartLongitude] = useState(22.684189);
+  const [startLatitude, setStartLatitude] = useState(22.684189);
+  const [startLongitude, setStartLongitude] = useState(75.876359);
   const [endLatitude, setEndLatitude] = useState(75.876359);
   const [endLongitude, setEndLongitude] = useState(22.684189);
   

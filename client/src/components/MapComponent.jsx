@@ -9,27 +9,49 @@ function MapComponent({
   endLatitude,
   startLongitude,
   endLongitude,
+  cStops,
 }) {
   const mapContainerRef = useRef(null);
   const [stops, setStops] = useState([
-    [77.329111, 23.282066],
-    [75.805834, 22.701772],
-    [75.846385, 25.155292],
   ]);
+
+  const getStops = () => {
+    const start = [
+      [startLatitude, startLongitude],
+    ];
+    const end = [
+      [endLatitude, endLongitude],
+    ];
+    const updatedStops = [...start, ...cStops, ...end];
+    setStops(updatedStops);
+  }
+
+  // useEffect(() => {
+
+  // },[]);
+
   useEffect(() => {
+    // getStops();
+
     let map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [startLongitude, startLatitude], // Set initial center to the provided coordinates
+      center: [startLatitude, startLongitude], // Set initial center to the provided coordinates
       zoom: 12,
     });
-
-    console.log({ startLatitude, endLatitude, startLongitude, endLongitude });
 
     // Add navigation control
     map.addControl(new mapboxgl.NavigationControl());
 
     // Fetch route data from Mapbox Directions API whenever coordinates change
+    const start = [
+      [startLatitude, startLongitude],
+    ];
+    const end = [
+      [endLatitude, endLongitude],
+    ];
+    const updatedStops = [...start, ...cStops, ...end];
+    setStops(updatedStops);
     fetchRoute(map);
 
     // Clean up on unmount
@@ -38,9 +60,21 @@ function MapComponent({
 
   // Function to fetch and display route
   const fetchRoute = async (map) => {
+    const start = [
+      [startLatitude, startLongitude],
+    ];
+    const end = [
+      [endLatitude, endLongitude],
+    ];
+    const updatedStops = [...start, ...cStops, ...end];
+    setStops(updatedStops);
     // Constructing the coordinates string for the stops
-    const coordinatesString = stops.map(stop => stop.join(',')).join(';');
+    let coordinatesString = stops.map(stop => stop.join(',')).join(';');
 
+    console.log("#$ " + coordinatesString);
+
+    console.log("&*" + `
+    https://api.mapbox.com/directions/v5/mapbox/driving/${coordinatesString}?geometries=geojson&access_token=${mapboxgl.accessToken}`);
     const response = await fetch(`
       https://api.mapbox.com/directions/v5/mapbox/driving/${coordinatesString}?geometries=geojson&access_token=${mapboxgl.accessToken}`
     );
@@ -85,7 +119,7 @@ function MapComponent({
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [77.329111, 23.282066],
+            coordinates: [startLongitude, startLatitude],
           },
         },
       },
@@ -105,7 +139,7 @@ function MapComponent({
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [75.846385, 25.155292],
+            coordinates: [endLongitude, endLatitude],
           },
         },
       },

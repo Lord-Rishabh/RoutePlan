@@ -1,97 +1,30 @@
-// import React, { useState } from 'react';
-
-// function CoordinateForm({setStartLatitude, setStartLongitude, setEndLatitude, setEndLongitude}) {
-//   var startLatitude, startLongitude, endLatitude, endLongitude;
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // Handle form submission here, such as updating state or making an API call
-//     setStartLatitude(startLatitude);
-//     setEndLatitude(endLatitude);
-//     setStartLongitude(startLongitude);
-//     setEndLongitude(endLongitude);
-//   };
-
-//   return (
-//     <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md">
-//       <h1 className="text-xl font-semibold mb-4">Coordinate Form</h1>
-//       <form onSubmit={handleSubmit}>
-//         <div className="mb-4">
-//           <label htmlFor="startLatitude" className="block text-sm font-medium text-gray-700">Start Latitude</label>
-//           <input
-
-//             id="startLatitude"
-//             className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-//             value={startLatitude}
-//             onChange={(e) => setStartLatitude(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <label htmlFor="startLongitude" className="block text-sm font-medium text-gray-700">Start Longitude</label>
-//           <input
-
-//             id="startLongitude"
-//             className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-//             value={startLongitude}
-//             onChange={(e) => setStartLongitude(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <label htmlFor="endLatitude" className="block text-sm font-medium text-gray-700">End Latitude</label>
-//           <input
-
-//             id="endLatitude"
-//             className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-//             value={endLatitude}
-//             onChange={(e) => setEndLatitude(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <label htmlFor="endLongitude" className="block text-sm font-medium text-gray-700">End Longitude</label>
-//           <input
-
-//             id="endLongitude"
-//             className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-//             value={endLongitude}
-//             onChange={(e) => setEndLongitude(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <button
-//           type="submit"
-//           className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
-//         >
-//           Submit
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default CoordinateForm;
-
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function CoordinateForm({setStartLatitude, setStartLongitude, setEndLatitude, setEndLongitude}) {
+function StopForm({ setStartLatitude, setStartLongitude, setEndLatitude, setEndLongitude, setcStops }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     startLatitude: '',
     startLongitude: '',
     endLatitude: '',
     endLongitude: ''
   });
- 
+  const [stops, setStops] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Update state with form data
-    setStartLatitude(formData.startLatitude);
-    setStartLongitude(formData.startLongitude);
-    setEndLatitude(formData.endLatitude);
-    setEndLongitude(formData.endLongitude);
+  const handleAddStop = () => {
+    setStops([...stops, [0, 0]]);
+  };
+
+  const handleStopLatitudeChange = (index, value) => {
+    const updatedStops = [...stops];
+    updatedStops[index][0] = parseFloat(value);
+    setStops(updatedStops);
+  };
+
+  const handleStopLongitudeChange = (index, value) => {
+    const updatedStops = [...stops];
+    updatedStops[index][1] = parseFloat(value);
+    setStops(updatedStops);
   };
 
   const handleChange = (e) => {
@@ -102,63 +35,116 @@ function CoordinateForm({setStartLatitude, setStartLongitude, setEndLatitude, se
     });
   };
 
-  return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md">
-      <h1 className="text-xl font-semibold mb-4">Coordinate Form</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="startLatitude" className="block text-sm font-medium text-gray-700">Start Latitude</label>
-          <input
-            id="startLatitude"
-            type="number"
-            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-            value={formData.startLatitude}
-            onChange={handleChange}
-            required
-          />
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStartLatitude(formData.startLatitude);
+    setStartLongitude(formData.startLongitude);
+    setEndLatitude(formData.endLatitude);
+    setEndLongitude(formData.endLongitude);
+    setcStops(stops);
+    console.log("!@" + formData.startLongitude);
+    navigate("/map");
+  };
+
+  return (<>
+    <div className="">
+      <div
+        className="w-full h-[100vh] px-9 gap-8 justify-between items-center fixed"
+        style={{
+          backgroundImage:
+            'url("https://static.vecteezy.com/system/resources/previews/000/271/674/original/vector-polygonal-world-map.jpg")',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="flex justify-center  mt-40 space-x-12">
+          <div className="w-[40vw] bg-opacity-40 bg-white p-8 rounded-lg mr-12 ">
+            <h1 className="text-3xl">Navigate. Optimize. Deliver</h1>
+            <p className="my-8">
+              Welcome to Volvo-Eicher's Route Planner App, your trusted companion for efficient and seamless navigation. Whether you're a seasoned driver or a logistics professional, our user-friendly platform empowers you to plan and optimize your routes with ease. Say goodbye to wasted time and fuel with our advanced route optimization algorithms tailored to your specific needs. Navigate through complex road networks effortlessly, ensuring timely deliveries and cost-effective operations. Join us on the journey towards smarter logistics solutions with Volvo-Eicher's Route Planner App.
+            </p>
+          </div>
+
+          <div className='pl-12 '>
+            <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto 	bg-opacity-30 bg-white p-4 rounded-lg">
+              <div className="mb-4 ">
+                <label className="block  text-sm font-bold mb-2">Start Latitude:</label>
+                <input
+                  type="number"
+                  value={formData.startLatitude}
+                  onChange={handleChange}
+                  id="startLatitude"
+                  required
+                  className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-bold mb-2">Start Longitude:</label>
+                <input
+                  type="text"
+                  value={formData.startLongitude}
+                  onChange={handleChange}
+                  id="startLongitude"
+                  required
+                  className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-bold mb-2">End Latitude:</label>
+                <input
+                  type="text"
+                  value={formData.endLatitude}
+                  onChange={handleChange}
+                  id="endLatitude"
+                  required
+                  className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-bold mb-2">End Longitude:</label>
+                <input
+                  type="text"
+                  value={formData.endLongitude}
+                  onChange={handleChange}
+                  id="endLongitude"
+                  required
+                  className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <button type="button" onClick={handleAddStop} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Add Stop
+              </button>
+              {stops.map((stop, index) => (
+                <div key={index} className="mb-4">
+                  <label className="block text-sm font-bold mb-2">{`Stop ${index + 1} Latitude:`}</label>
+                  <input
+                    type="text"
+                    value={stop[0]}
+                    onChange={(e) => handleStopLatitudeChange(index, e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                  <label className="block text-sm font-bold mb-2">{`Stop ${index + 1} Longitude:`}</label>
+                  <input
+                    type="text"
+                    value={stop[1]}
+                    onChange={(e) => handleStopLongitudeChange(index, e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+              ))}
+                <button type="submit" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-6">
+                  Submit
+                </button>
+            </form>
+
+          </div>
         </div>
-        <div className="mb-4">
-          <label htmlFor="startLongitude" className="block text-sm font-medium text-gray-700">Start Longitude</label>
-          <input
-            id="startLongitude"
-            type="number"
-            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-            value={formData.startLongitude}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="endLatitude" className="block text-sm font-medium text-gray-700">End Latitude</label>
-          <input
-            id="endLatitude"
-            type="number"
-            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-            value={formData.endLatitude}  
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="endLongitude" className="block text-sm font-medium text-gray-700">End Longitude</label>
-          <input
-            id="endLongitude"
-            type="number"
-            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-            value={formData.endLongitude}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
-        >
-          Submit
-        </button>
-      </form>
+      </div>
     </div>
+  </>
+
   );
 }
 
-export default CoordinateForm;
+export default StopForm;
